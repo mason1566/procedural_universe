@@ -145,7 +145,27 @@ public:
             FillCircle(vBody, (int)(star.starDiameter * 1.375), star.starColour);
             vBody.x += (star.starDiameter * 1.375) + 8;
 
-            
+            // Draw Planets
+            for (auto& planet : star.planets) 
+            {
+                if (vBody.x + planet.diameter >= 496) break;
+
+                vBody.x += planet.diameter;
+                FillCircle(vBody, (int)(planet.diameter * 1.0), olc::RED);
+
+                olc::vi2d vMoon = vBody;
+                vMoon.y += planet.diameter + 10;
+
+                // Draw Moons
+                for (auto& moon : planet.moons) {
+                    vMoon.y += moon;
+                    FillCircle(vMoon, (int)(moon * 1.0), olc::GREY);
+                    vMoon.y += moon + 10;
+                }
+
+                vBody.x += planet.diameter + 8;
+            }
+
         }
         
         return true;
